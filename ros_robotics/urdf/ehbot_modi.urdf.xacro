@@ -1,0 +1,758 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ehbot" >
+
+<!--link and joint configuration-->
+
+<!--const double offset_lfj2 = - 1.59841;
+const double offset_lfj1 = + 0.800364;
+const double offset_lfj0 = + 0.0;
+const double offset_lrj2 = + 1.59841;
+const double offset_lrj1 = - 0.800364;
+const double offset_lrj0 = + 0.0;
+const double offset_rfj2 = - 1.59841;
+const double offset_rfj1 = + 0.800364;
+const double offset_rfj0 = + 0.0;
+const double offset_rrj2 = + 1.59841;
+const double offset_rrj1 = - 0.800364;
+const double offset_rrj0 = + 0.0;-->
+    <material name="Black">
+        <color rgba="0 0 0 1"/>
+    </material>
+    
+    <material name="White">
+        <color rgba="1 1 1 1"/>
+    </material>
+ 
+    <material name="Blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+    <material name="ehbot_color">
+        <color rgba="0 0.3 0.5 0.8"/>
+    </material>
+    
+    <xacro:property name="offset_fj2" value="-1.59841"/>
+    <xacro:property name="offset_fj1" value="0.800364"/>
+    <xacro:property name="offset_rj2" value="1.59841"/>
+    <xacro:property name="offset_rj1" value="-0.800364"/>
+    <xacro:property name="Enable_offset" value="0"/>
+
+    <!-- <link name="world"> </link>
+
+    <joint name="world_base_joint" type="floating">
+        <origin xyz="-0.8 0.5 0.880" rpy="0 0 0" />
+        <parent link="world" />
+        <child  link="torsor" />
+    </joint> -->
+
+    <link name="torsor">
+        <inertial>
+            <origin xyz="-0.0006103852234427 0.0022287174896614 0.0439870877275536" rpy="0 0 0" />
+            <mass   value="91.5850398109959" />
+            <inertia
+                ixx="3.21847046739878"
+                ixy="0.000120950424453411"
+                ixz="0.00371240385169517"
+                iyy="8.77763016485756"
+                iyz="0.00439125064440664"
+                izz="9.57066327503177" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/torsor.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/torsor.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="link_lf_leg_thigh_roll">
+        <inertial>
+            <origin xyz="-0.0943741940341396 -0.00414241783850827 -0.0219639737576229" rpy="0 0 0" />
+            <mass   value="4.50002341531795" />
+            <inertia
+                ixx="0.00982462171332848"
+                ixy="-0.00105561145994919"
+                ixz="-0.00234857174109823"
+                iyy="0.0466176952693577"
+                iyz="-0.000981599552383667"
+                izz="0.0448674267828951" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_thigh_roll.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_thigh_roll.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lf_leg_thigh_roll" type="revolute">
+        <origin  xyz="0.50572 0.175 -0.0920000000000047" rpy="0 0 0" />
+        <parent  link="torsor" />
+        <child   link="link_lf_leg_thigh_roll" />
+        <axis    xyz="1 0 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lf_leg_thigh_pitch">
+        <inertial>
+            <origin xyz="-0.0148914459117169 -6.09817776831001E-08 -0.120580016468622" rpy="0 0 0" />
+            <mass   value="4.49994336009306" />
+            <inertia
+                ixx="0.0466544119236218"
+                ixy="-1.10743990761792E-09"
+                ixz="-0.00158997011349249"
+                iyy="0.0459784407608387"
+                iyz="4.49682466619388E-08"
+                izz="0.0052871361451635" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_thigh_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_thigh_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lf_leg_thigh_pitch" type="revolute">
+<!--        <origin xyz="-0.00200286949996009 0 -0.0852383962390745" rpy="0 ${offset_fj1*Enable_offset} 0" />-->
+        <origin xyz="-0.00200286949996009 0 -0.0852383962390745" rpy="0 0 0" />
+        <parent link="link_lf_leg_thigh_roll" />
+        <child  link="link_lf_leg_thigh_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lf_leg_knee_pitch">
+        <inertial>
+            <origin xyz="-0.0320829667993126 7.21137447534659E-08 -0.127304019469431" rpy="0 0 0" />
+            <mass   value="2.99998769225701" />
+            <inertia
+                ixx="0.0353013691970067"
+                ixy="-6.09294126991979E-09"
+                ixz="0.00381057869029104"
+                iyy="0.0367890799827388"
+                iyz="2.35681115848283E-08"
+                izz="0.00273372664629618" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_knee_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lf_leg_knee_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lf_leg_knee_pitch" type="revolute">
+<!--        <origin xyz="0 0 -0.31" rpy="0 ${offset_fj2*Enable_offset} 0" />-->
+        <origin xyz="0 0 -0.31" rpy="0 0 0" />
+        <parent link="link_lf_leg_thigh_pitch" />
+        <child  link="link_lf_leg_knee_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lf_leg_foot_fixed">
+<!--        <inertial>
+            <origin xyz="3.07690428691387E-10 3.74000053149359E-10 -0.0185574911656095" rpy="0 0 0" />
+            <mass   value="0.141299494484774" />
+            <inertia
+                ixx="5.92098764432421E-05"
+                ixy="-9.95566799709695E-13"
+                ixz="-1.24081219940374E-12"
+                iyy="7.07534068503685E-05"
+                iyz="2.73110438700764E-13"
+                izz="9.57777436587173E-05" />
+        </inertial>-->
+        <visual>
+            <origin xyz="0 0 0"  rpy="0 0 0" />
+            <geometry>
+                    <sphere radius="0.03175"/>
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                    <sphere radius="0.03175"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lf_leg_foot_fixed" type="fixed">
+        <origin xyz="-0.0455 0 -0.311" rpy="0 0 0" />
+        <parent link="link_lf_leg_knee_pitch" />
+        <child  link="link_lf_leg_foot_fixed" />
+    </joint>
+
+  <link name="link_rf_leg_thigh_roll">
+    <inertial>
+      <origin xyz="-0.0943741978896471 -0.00414241793693815 -0.0219639729824721" rpy="0 0 0" />
+      <mass   value="4.5000230676858" />
+      <inertia
+        ixx="0.00982462181328556"
+        ixy="-0.00105561106736501"
+        ixz="-0.00234857155524412"
+        iyy="0.0466176940588004"
+        iyz="-0.000981599593828068"
+        izz="0.0448674261146214" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_thigh_roll.STL" />
+      </geometry>
+      <material name="ehbot_color"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_thigh_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_rf_leg_thigh_roll" type="revolute">
+    <origin xyz="0.50572 -0.175 -0.0920000000000047" rpy="0 0 0" />
+    <parent link="torsor" />
+    <child  link="link_rf_leg_thigh_roll" />
+    <axis   xyz="1 0 0" />
+  <limit
+    upper="3.1415926"
+    lower="-3.1415926"
+    effort="400"
+    velocity="10" />
+    <dynamics damping="30.0" friction="0.0"/>
+  </joint>
+
+  <link name="link_rf_leg_thigh_pitch">
+    <inertial>
+      <origin xyz="-0.0148914501486359 -5.86718460482416E-08 -0.120580019886807" rpy="0 0 0" />
+      <mass value="4.49994354769207" />
+      <inertia
+        ixx="0.046654411255362"
+        ixy="-9.14884872055615E-10"
+        ixz="-0.001589969766758"
+        iyy="0.0459784397814242"
+        iyz="4.58275775198651E-08"
+        izz="0.0052871370562076" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+      <geometry>
+        <mesh
+          filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_thigh_pitch.STL" />
+      </geometry>
+      <material name="ehbot_color"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.1415926" />
+      <geometry>
+        <mesh
+          filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_thigh_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+    <joint name="joint_rf_leg_thigh_pitch" type="revolute">
+        <origin xyz="-0.00200286949996009 0 -0.0852383962390745" rpy="0 0 0" />
+<!--        <origin xyz="-0.00200286949996009 0 -0.0852383962390745" rpy="0 ${offset_fj1*Enable_offset} 0" />-->
+        <parent link="link_rf_leg_thigh_roll" />
+        <child  link="link_rf_leg_thigh_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_rf_leg_knee_pitch">
+        <inertial>
+            <origin xyz="-0.0320829692685936 5.86797160306851E-08 -0.127304105790515" rpy="0 0 0" />
+            <mass value="2.99998384639397" />
+            <inertia ixx="0.035301351372526"
+                ixy="-6.10115530948123E-09"
+                ixz="0.00381057800772144"
+                iyy="0.0367890621305295"
+                iyz="2.08352443066853E-08"
+                izz="0.00273372592686392" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_knee_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_rf_leg_knee_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rf_leg_knee_pitch" type="revolute">
+        <origin xyz="0 0 -0.31" rpy="0 0 0" />
+        <parent link="link_rf_leg_thigh_pitch" />
+        <child  link="link_rf_leg_knee_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link  name="link_rf_leg_foot_fixed">
+<!--        <inertial>
+            <origin xyz="3.07690428691387E-10 3.74000053149359E-10 -0.0185574911656095" rpy="0 0 0" />
+            <mass value="0.141299494484774" />
+            <inertia
+                ixx="5.92098764432421E-05"
+                ixy="-9.95566799709695E-13"
+                ixz="-1.24081219940374E-12"
+                iyy="7.07534068503685E-05"
+                iyz="2.73110438700764E-13"
+                izz="9.57777436587173E-05" />
+        </inertial>-->
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                    <sphere radius="0.03175"/>
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                    <sphere radius="0.03175"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rf_leg_foot_fixed" type="fixed">
+        <origin xyz="-0.0455 0 -0.311" rpy="0 0 0" />
+        <parent link="link_rf_leg_knee_pitch" />
+        <child  link="link_rf_leg_foot_fixed" />
+    </joint>
+
+    <link name="link_rr_leg_thigh_roll">
+        <inertial>
+            <origin xyz="-0.094374196336685 -0.00414241793656139 -0.0219639730380668" rpy="0 0 0" />
+            <mass   value="4.50002319742779" />
+            <inertia
+                ixx="0.00982462172543857"
+                ixy="-0.00105561121449616"
+                ixz="-0.00234857160884562"
+                iyy="0.0466176944294046"
+                iyz="-0.000981599590713499"
+                izz="0.0448674263021047" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+               filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_thigh_roll.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0"  rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+               filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_thigh_roll.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rr_leg_thigh_roll" type="revolute">
+        <origin xyz="-0.50572 -0.175 -0.092" rpy="0 0 0" />
+        <parent link="torsor" />
+        <child  link="link_rr_leg_thigh_roll" />
+        <axis   xyz="1 0 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+
+    <link name="link_rr_leg_thigh_pitch">
+        <inertial>
+            <origin xyz="-0.0148914502666558 -5.91915725878245E-08 -0.120580020194505" rpy="0 0 0" />
+            <mass   value="4.4999435742762" />
+            <inertia
+                ixx="0.0466544116697395"
+                ixy="-9.39666746655299E-10"
+                ixz="-0.0015899698410406"
+                iyy="0.0459784401767021"
+                iyz="4.5541678418169E-08"
+                izz="0.00528713706522366" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_thigh_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_thigh_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rr_leg_thigh_pitch"  type="revolute">
+<!--        <origin xyz="-0.0020028694999602 0 -0.0852383962390742"  rpy="0 -0.800364 0" />-->
+        <origin xyz="-0.0020028694999602 0 -0.0852383962390742"  rpy="0 0 0" />
+        <parent link="link_rr_leg_thigh_roll" />
+        <child  link="link_rr_leg_thigh_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_rr_leg_knee_pitch">
+        <inertial>
+            <origin xyz="-0.0320829686163923 7.22032576505605E-08 -0.127304021441792" rpy="0 0 0" />
+            <mass   value="2.99998760663944" />
+            <inertia
+                ixx="0.0353013687923295"
+                ixy="-6.1227552617674E-09"
+                ixz="0.00381057825289451"
+                iyy="0.0367890794730177"
+                iyz="2.3577119714497E-08"
+                izz="0.00273372651429908" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+               filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_knee_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+               filename="package://ros_robotics/meshes/ehbot/visual/link_rr_leg_knee_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rr_leg_knee_pitch" type="revolute">
+<!--        <origin xyz="0 0 -0.31" rpy="0 1.59841 0" />-->
+        <origin xyz="0 0 -0.31" rpy="0 0 0" />
+        <parent link="link_rr_leg_thigh_pitch" />
+        <child  link="link_rr_leg_knee_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_rr_leg_foot_fixed">
+<!--        <inertial>
+            <origin xyz="3.07690428691387E-10 3.74000053149359E-10 -0.0185574911656095" rpy="0 0 0" />
+            <mass value="0.141299494484774" />
+            <inertia
+                ixx="5.92098764432421E-05"
+                ixy="-9.95566799709695E-13"
+                ixz="-1.24081219940374E-12"
+                iyy="7.07534068503685E-05"
+                iyz="2.73110438700764E-13"
+                izz="9.57777436587173E-05" />
+        </inertial>-->
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                    <sphere radius="0.03175"/>
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                  <sphere radius="0.03175"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_rr_leg_foot_fixed" type="fixed">
+        <origin xyz="0.0455 0 -0.311" rpy="0 0 0" />
+        <parent link="link_rr_leg_knee_pitch" />
+        <child  link="link_rr_leg_foot_fixed" />
+    </joint>
+
+    <link name="link_lr_leg_thigh_roll">
+        <inertial>
+            <origin xyz="-0.0943741958016527 -0.00414241792051155 -0.0219639732208513" rpy="0 0 0" />
+            <mass   value="4.50002325222667" />
+            <inertia
+                ixx="0.00982462172588083"
+                ixy="-0.00105561127204788"
+                ixz="-0.00234857164517063"
+                iyy="0.0466176946585488"
+                iyz="-0.000981599581122774"
+                izz="0.0448674264419542" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_thigh_roll.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_thigh_roll.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lr_leg_thigh_roll" type="revolute">
+        <origin xyz="-0.50572 0.175 -0.092" rpy="0 0 0" />
+        <parent link="torsor" />
+        <child  link="link_lr_leg_thigh_roll" />
+        <axis   xyz="1 0 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lr_leg_thigh_pitch">
+        <inertial>
+            <origin xyz="-0.0148914503907631 -5.93199005471945E-08 -0.120580020240539" rpy="0 0 0" />
+            <mass value="4.49994359429806" />
+            <inertia
+                ixx="0.0466544117488234"
+                ixy="-9.44320518480174E-10"
+                ixz="-0.00158996986915856"
+                iyy="0.0459784402421914"
+                iyz="4.5427164262361E-08"
+                izz="0.00528713708449312" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_thigh_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_thigh_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lr_leg_thigh_pitch" type="revolute">
+<!--        <origin xyz="-0.0020028694999602 0 -0.0852383962390744" rpy="0 -0.800364 0" />-->
+        <origin xyz="-0.0020028694999602 0 -0.0852383962390744" rpy="0 0 0" />
+        <parent link="link_lr_leg_thigh_roll" />
+        <child  link="link_lr_leg_thigh_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lr_leg_knee_pitch">
+        <inertial>
+            <origin xyz="-0.0320829686966787 7.18372203528661E-08 -0.127304021237652" rpy="0 0 0" />
+            <mass   value="2.99998760550299" />
+            <inertia
+                ixx="0.0353013689169802"
+                ixy="-6.11566253830804E-09"
+                ixz="0.00381057822904622"
+                iyy="0.0367890796154341"
+                iyz="2.34905918143336E-08"
+                izz="0.00273372651571912" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_knee_pitch.STL" />
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1415926" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_lr_leg_knee_pitch.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lr_leg_knee_pitch" type="revolute">
+        <origin xyz="0 0 -0.31" rpy="0 0 0" />
+        <parent link="link_lr_leg_thigh_pitch" />
+        <child  link="link_lr_leg_knee_pitch" />
+        <axis   xyz="0 1 0" />
+        <limit
+            upper="3.1415926"
+            lower="-3.1415926"
+            effort="400"
+            velocity="10" />
+        <dynamics damping="30.0" friction="0.0"/>
+    </joint>
+
+    <link name="link_lr_leg_foot_fixed">
+ <!--       <inertial>
+            <origin xyz="3.07690428691387E-10 3.74000053149359E-10 -0.0185574911656095" rpy="0 0 0" />
+            <mass   value="0.141299494484774" />
+            <inertia
+                ixx="5.92098764432421E-05"
+                ixy="-9.95566799709695E-13"
+                ixz="-1.24081219940374E-12"
+                iyy="7.07534068503685E-05"
+                iyz="2.73110438700764E-13"
+                izz="9.57777436587173E-05" />
+        </inertial>-->
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="0.03175"/>
+            </geometry>
+            <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="0.03175"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_lr_leg_foot_fixed" type="fixed">
+        <origin xyz="0.0455 0 -0.311" rpy="0 0 0" />
+        <parent link="link_lr_leg_knee_pitch" />
+        <child  link="link_lr_leg_foot_fixed" />
+    </joint>
+
+    <link name="link_torsor_imu">
+        <inertial>
+            <origin xyz="-2.89308406269395E-05 2.31980865073034E-10 -0.00658918556107091" rpy="0 0 0" />
+            <mass   value="4.15611164377306E-05" />
+            <inertia
+                ixx="4.03076964082622E-08"
+                ixy="6.69730564701523E-17"
+                ixz="-4.47571283232843E-11"
+                iyy="4.03777695620506E-08"
+                iyz="2.7694006039881E-16"
+                izz="3.88968027053409E-08" />
+        </inertial>
+        <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_torsor_imu.STL" />
+            </geometry>
+        <material name="ehbot_color"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh
+              filename="package://ros_robotics/meshes/ehbot/visual/link_torsor_imu.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_torsor_imu" type="fixed">
+        <origin xyz="0.337098453809525 0.000149999999999734 0.207999999999999" rpy="0 0 0" />
+        <parent link="torsor" />
+        <child  link="link_torsor_imu" />
+        <axis   xyz="0 0 0" />
+    </joint>
+
+</robot>
